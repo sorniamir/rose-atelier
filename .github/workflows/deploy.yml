@@ -29,6 +29,12 @@ jobs:
           python -c 'import re; s=open("index.html", encoding="utf-8").read(); m=re.search(r"<script>(.*?)</script>", s, re.S); assert m, "inline app script missing"; open("/tmp/storefront.js","w",encoding="utf-8").write(m.group(1))'
           node --check /tmp/storefront.js
           echo "Storefront smoke checks and JavaScript syntax passed."
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check Supabase Edge Functions
+        run: deno check --no-lock supabase/functions/create-order/index.ts supabase/functions/manage-inventory/index.ts
       - name: Prepare public site
         run: |
           mkdir -p _site
