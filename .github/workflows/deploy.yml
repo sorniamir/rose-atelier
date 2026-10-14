@@ -20,13 +20,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Validate storefront files
+      - name: Validate storefront markup and functionality hooks
         run: |
           test -s index.html
           grep -q 'lang="fa" dir="rtl"' index.html
           grep -q 'productsGrid' index.html
           grep -q 'checkoutForm' index.html
-          echo "Storefront smoke checks passed."
+          python -c 'import re; s=open("index.html", encoding="utf-8").read(); m=re.search(r"<script>(.*?)</script>", s, re.S); assert m, "inline app script missing"; open("/tmp/storefront.js","w",encoding="utf-8").write(m.group(1))'
+          node --check /tmp/storefront.js
+          echo "Storefront smoke checks and JavaScript syntax passed."
       - name: Prepare public site
         run: |
           mkdir -p _site
