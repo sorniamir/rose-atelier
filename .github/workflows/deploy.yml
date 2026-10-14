@@ -27,12 +27,19 @@ jobs:
           grep -q 'productsGrid' index.html
           grep -q 'checkoutForm' index.html
           echo "Storefront smoke checks passed."
+      - name: Prepare public site
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          touch _site/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
   deploy:
     environment:
