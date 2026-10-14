@@ -307,7 +307,7 @@ begin
   end if;
 
   if v_order.payment_status = 'paid' then
-    if v_order.payment_reference = p_reference then
+    if v_order.payment_reference = trim(p_reference) then
       return v_order.id;
     end if;
     raise exception 'Order has already been paid with another reference' using errcode = '23505';
