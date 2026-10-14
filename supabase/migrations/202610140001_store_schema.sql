@@ -158,7 +158,12 @@ create policy "admins can read inventory history"
 grant select on public.products to anon, authenticated;
 grant select on public.store_admins, public.orders, public.order_items to authenticated;
 grant select on public.inventory_movements to authenticated;
-grant insert, update, delete on public.products to authenticated;
+-- Keep stock changes behind the audited server endpoint; admins can edit catalog columns only.
+grant insert (slug, sku, name, description, category, price_amount, compare_at_amount, currency_code, image_url, is_published, is_featured, metadata)
+  on public.products to authenticated;
+grant update (slug, sku, name, description, category, price_amount, compare_at_amount, currency_code, image_url, is_published, is_featured, metadata, updated_at)
+  on public.products to authenticated;
+grant delete on public.products to authenticated;
 grant all on public.store_admins, public.products, public.orders, public.order_items, public.inventory_movements to service_role;
 
 -- Add the first administrator manually after creating the user in Supabase Auth:
