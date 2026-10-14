@@ -39,7 +39,7 @@
 
 1. ساخت پروژه مستقل Supabase برای فروشگاه (به پروژه‌های نامرتبط وصل نشوید).
 2. اجرای migration پایگاه داده و تنظیم RLS مطابق چک‌لیست.
-3. پیاده‌سازی API/Edge Function سمت سرور برای محاسبه مجدد قیمت، رزرو اتمیک موجودی و ایجاد سفارش.
+3. اتصال Edge Functionهای موجود، تنظیم secrets و تست هویت، ایجاد سفارش، رزرو اتمیک موجودی و نقش مدیر.
 4. اتصال احراز هویت امن و محدودسازی پنل ادمین به نقش مدیر.
 5. اتصال درگاه پرداخت متناسب با کشور/شرکت پذیرنده و بررسی callback سمت سرور.
 6. تنظیم دامنه، سیاست حریم خصوصی، قوانین مرجوعی، ارسال و مالیات.
@@ -50,7 +50,10 @@
 - index.html — رابط فروشگاه و تعاملات نمونه
 - .github/workflows/deploy.yml — استقرار خودکار GitHub Pages
 - docs/PRODUCTION_CHECKLIST.md — مراحل راه‌اندازی عملیاتی
-- supabase/migrations/202610140001_store_schema.sql — طرح اولیه جداول و سیاست‌های RLS
+- supabase/migrations/202610140001_store_schema.sql — جداول، سیاست‌های RLS و RPCهای حساس
+- supabase/functions/create-order/index.ts — ایجاد سفارش و رزرو اتمیک موجودی
+- supabase/functions/manage-inventory/index.ts — مدیریت موجودی فقط برای مدیر
+- docs/BACKEND_API.md — قرارداد API و مراحل تکمیل پرداخت
 
 ## مجوز
 
