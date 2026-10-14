@@ -1,0 +1,8 @@
+# Use this config with Supabase CLI from this project directory.
+# JWT verification is performed explicitly in each function using auth.getUser(token).
+# This supports modern signing-key setups; never remove the in-function authentication check.
+[functions.create-order]
+verify_jwt = false
+
+[functions.manage-inventory]
+verify_jwt = false
